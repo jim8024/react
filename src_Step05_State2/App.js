@@ -28,10 +28,32 @@ class App extends Component{
         <h1>인덱스 페이지 입니다.</h1>
         {/* friends 라는 props 명으로 Array 전달하기 */}
         <FriendComponent friends={this.state.friends} 
-          updateAction={this.updateAction}/>  {/* updateAction 라는 props 명으로 function 전달하기 */}
+          updateAction={this.updateAction}
+          deleteAction={this.deleteAction}/>  {/* updateAction 라는 props 명으로 function 전달하기 */}
       </div>
     )
   }
+
+  deleteAction = (idx)=>{
+    /*
+      this.state.friends 배열에서 index 에 해당하는 아이템을 삭제한 새로운 배열을 얻어내서
+      state 변경하기 
+    */
+    const newArray=this.state.friends.filter((item, index)=>{
+      if(index != idx){
+        return true; //true 가 리턴된 item 만 남겨지고 
+      }else{
+        return false; //false 가 리턴된 item 은 제거된 새로운 배열이 구성된다. 
+      }
+    });
+    //위의 동작을 좀더 간략히 하면 
+    const newArray2=this.state.friends.filter((item, index)=> index != idx);
+
+    this.setState({
+      friends:newArray2
+    })
+  }
+
   //자식 component 가 특정 시점에서 호출하는 함수 
   updateAction = (data)=>{
     //data 는 {index: x, newName: x} 형식의 object 이다. 
